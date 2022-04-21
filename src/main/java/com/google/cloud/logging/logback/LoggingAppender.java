@@ -276,7 +276,8 @@ public class LoggingAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
                     .newInstance();
             enhancers.add(enhancer);
           } catch (Exception ex) {
-            // invalid className: ignore
+            throw new IllegalArgumentException(
+                String.format("Bad enhancer class: %s", className), ex);
           }
         }
       }

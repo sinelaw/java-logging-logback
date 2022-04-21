@@ -47,6 +47,7 @@ import org.easymock.EasyMock;
 import org.easymock.EasyMockRunner;
 import org.junit.Before;
 import org.junit.Test;
+import static org.junit.Assert.assertThrows;
 import org.junit.runner.RunWith;
 import org.slf4j.MDC;
 
@@ -343,6 +344,12 @@ public class LoggingAppenderTest {
     Map<String, String> capturedArgumentMap =
         capturedArgument.getValue().iterator().next().getLabels();
     assertThat(capturedArgumentMap.get("foo")).isEqualTo("bar");
+  }
+
+  @Test
+  public void testAddCustomLoggingEnhancerBadClass() {
+    loggingAppender.addEnhancer("bad class name");
+    assertThrows(IllegalArgumentException.class, loggingAppender::start);
   }
 
   @Test
